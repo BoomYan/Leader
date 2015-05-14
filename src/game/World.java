@@ -141,7 +141,7 @@ public class World extends GameObject {
 		y = iy;
 
 		level = (p == null ? 1 : p.level + 1);
-		
+		level = 10;
 		if(level >= 4){
 			radius = sketch.random(minWorldRadius, maxWorldRadius);
 			//generate random difficulty

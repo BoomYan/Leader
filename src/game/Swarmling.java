@@ -97,7 +97,9 @@ public class Swarmling extends GameObject {
 			carrying = carrything;
 			carryX = x - carrything.x;
 			carryY = y - carrything.y;
-
+			
+			target =  null;
+			
 			unfollow();
 		}
 	}
@@ -226,7 +228,7 @@ public class Swarmling extends GameObject {
 				}
 				
 				// attack behavoiur with obstacles
-				if (other instanceof Obstacle) {
+				if (other instanceof Obstacle && carrying == null) {
 					if(!(target!= null && target.obstacleLife>=0 && distTo(target)<attackRadius))
 					// check if it can be our new target.
 					if ((attackCooldown == 0) && (distance < targetDist) && (carrying == null)) {
@@ -275,9 +277,12 @@ public class Swarmling extends GameObject {
 			ddy -= distOutsideWorld * y / sketch.world.radius;
 		}
 		
-
-		if(lastFrameTarget!= null && lastFrameTarget.obstacleLife>=0 && distTo(lastFrameTarget)<attackRadius)
-		target = lastFrameTarget;
+		// Keep attacking last frame target if it is attackable
+		if(lastFrameTarget!= null && 
+				lastFrameTarget.obstacleLife>=0 && 
+				distTo(lastFrameTarget)<attackRadius &&
+				carrying ==null)
+			target = lastFrameTarget;
 		
 		if (target != null){
 			Obstacle tmp = (Obstacle)target;
